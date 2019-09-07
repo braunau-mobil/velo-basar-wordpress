@@ -24,10 +24,6 @@ class Api {
     function rest_api_init() {
         register_rest_route( $this->namespace, '/' . $this->base, array(
             array(
-                'callback' => array( $this, 'all' ),
-                'methods' => WP_REST_Server::READABLE,
-            ),
-            array(
                 'callback' => array( $this, 'set' ),
                 'methods' => WP_REST_Server::CREATABLE,
                 'args' => array(
@@ -57,13 +53,6 @@ class Api {
 
     function validate_token() {
         return get_option( BM_VELOBASAR_API_TOKEN_OPTION, '' ) === $_SERVER['HTTP_BM_VELOBASAR_API_TOKEN'];
-    }
-
-    function all() {
-        if( ! $this->validate_token() ) {
-            return new WP_REST_Response('BM_Velobasar: Unauthorized access', 401);
-        }
-        return $this->db->get_all_saletexts();
     }
 
     function get( WP_REST_Request $request ) {

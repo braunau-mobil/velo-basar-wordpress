@@ -50,9 +50,8 @@ class Shortcode {
 
         <?php
         // TODO: add captcha
-        $accessid = $_POST['accessid'];
+        $accessid = sanitize_text_field( $_POST['accessid'] );
         if( $accessid ) {
-            // TODO: show salestatus text for given accessid
             $saletext = $this->db->get_saletext( $accessid );
             if( ! $saletext or sizeof( $saletext ) < 1 ) {
                 echo $nosale_message;
