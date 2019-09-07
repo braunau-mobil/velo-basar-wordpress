@@ -10,7 +10,10 @@ Wordpress Seite erzeugt.
 
 Bietet entsprechende Einstellungsmöglichkeiten im WordPress Admin
 
-Example API Calls:
+### Example API Calls:
 
-curl -i -X GET -H "bm-velobasar-api-token: philtest" "http://127.0.0.1:8080/wp-json/bm/v1/velobasar/test1"
+`curl -i -X GET -H "bm-velobasar-api-token: philtest" "http://127.0.0.1:8080/wp-json/bm/v1/velobasar/test1"`
 
+### Example Shortcode
+
+`[bmvelobasar title="Fahrradbasar Verkaufsabfrage" titletag="h4"]`
