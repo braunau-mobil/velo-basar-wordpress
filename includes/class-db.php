@@ -23,6 +23,7 @@ class DB {
                         saletext TEXT,
                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
         dbDelta( $queries );
+        $this->create_test_data();
     }
 
     /**
@@ -47,6 +48,16 @@ class DB {
             'saletext' => $saletext,
             'updated_at' => current_time( 'mysql', 0 ) )
         );
+    }
+
+    function create_test_data() {
+        $this->insert_or_update( 'braunaumobil.at', '<h4>Der Basar läuft gut!</h4><p>Test paragraph</p><ul><li>Ein Verkauf</li><li>Zwei Verkauf</li></ul>');
+    }
+
+    function reset() {
+        global $wpdb;
+        $wpdb->query('TRUNCATE TABLE $this->table');
+        $this->create_test_data();
     }
 
     function delete( $accessid ) {

@@ -51,7 +51,7 @@ class BM_Velobasar {
         }
         $shortcode = new Shortcode( $this->db );
         if( is_admin() ) {
-            $admin = new Admin();
+            $admin = new Admin( $this->db );
         }
 
         register_activation_hook( __FILE__, array( $this, 'activate' ) );
