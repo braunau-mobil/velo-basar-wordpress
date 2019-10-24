@@ -24,6 +24,8 @@ define( 'BM_VELOBASAR_PLUGIN_DIR', __DIR__ );
 define( 'BM_VELOBASAR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BM_TABLENAME', 'bm_velobasar_salestatus' );
 define( 'BM_VELOBASAR_API_TOKEN_OPTION', 'bm_velobasar_api_token' );
+define( 'BM_VELOBASAR_API_TOKEN_MINLEN', 20 );
+define( 'BM_VELOBASAR_API_TOKEN_MAXLEN', 60 );
 
 class BM_Velobasar {
 
