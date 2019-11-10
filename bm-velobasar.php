@@ -15,7 +15,7 @@
 
 
 use BM_Velobasar\DB;
-use BM_Velobasar\Api;
+use BM_Velobasar\API;
 use BM_Velobasar\Shortcode;
 use BM_Velobasar\Admin;
 
@@ -47,7 +47,7 @@ class BM_Velobasar {
         $this->db = new DB();
         $bm_velobasar_date = get_option('bm_velobasar_date');
         if( $bm_velobasar_date == date('Y-m-d')) {
-            $api = new Api( $this->db );
+            $api = new API( $this->db );
         }
         $shortcode = new Shortcode( $this->db );
         if( is_admin() ) {

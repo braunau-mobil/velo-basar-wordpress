@@ -10,10 +10,10 @@ if ( !defined( 'BM_VELOBASAR_API_TOKEN' ) )
     define( 'BM_VELOBASAR_API_TOKEN', getenv('BM_VELOBASAR_API_TOKEN'));
 
 
-class Api {
+class API {
 
-    private $namespace = 'bm/v1';
-    private $base = 'velobasar';
+    const APINAMESPACE = 'bm/v1';
+    const APIBASE = 'velobasar';
     private $db;
     
     function __construct( $db ) {
@@ -21,8 +21,13 @@ class Api {
         add_action( 'rest_api_init', array($this, 'rest_api_init') );
     }
 
+    public static function get_endpoint_url()
+    {
+        return '/'. self::APINAMESPACE . '/' . self::APIBASE;
+    }
+
     function rest_api_init() {
-        register_rest_route( $this->namespace, '/' . $this->base, array(
+        register_rest_route( self::APINAMESPACE, '/' . self::APIBASE, array(
             array(
                 'callback' => array( $this, 'set' ),
                 'methods' => WP_REST_Server::CREATABLE,
@@ -32,7 +37,7 @@ class Api {
                 )
             )
         ));
-        register_rest_route( $this->namespace, '/' . $this->base . '/(?P<accessid>\w+)', array(
+        register_rest_route( self::APINAMESPACE, '/' . self::APIBASE . '/(?P<accessid>\w+)', array(
             array(
                 'callback' => array( $this, 'get' ),
                 'methods' => WP_REST_Server::READABLE,

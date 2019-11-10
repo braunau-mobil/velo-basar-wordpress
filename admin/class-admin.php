@@ -2,9 +2,12 @@
 
 namespace BM_Velobasar;
 
+use BM_Velobasar\API;
+
 class Admin {
 
     private $db;
+    private $pretty_permalinks;
 
     function __construct( $db ) {
         $this->db = $db;
@@ -15,6 +18,7 @@ class Admin {
         // enqueue admin style and scripts
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
         add_action( 'update_option_bm_velobasar_reset', array( $this, 'bm_velobasar_reset' ), 10, 2 );
+        $this->pretty_permalinks = get_option( 'permalink_structure' );
         register_setting( 'general', BM_VELOBASAR_API_TOKEN_OPTION,
             array(
                 'type'              => 'string',
@@ -22,6 +26,7 @@ class Admin {
             )
         );
         register_setting( 'general', 'bm_velobasar_date' );
+        register_setting( 'general', 'bm_velobasar_resturl' );
         register_setting( 'general', 'bm_velobasar_reset' );
 
         add_settings_section(
@@ -43,6 +48,14 @@ class Admin {
             'bm_velobasar_date',
             __( 'Basar Datum', 'bm-velobasar' ),
             array($this, 'settings_field_date'),
+            'general',
+            'bm-velobasar'
+        );
+
+        add_settings_field(
+            'bm_velobasar_resturl',
+            __( 'URL des REST API Endpunkt', 'bm-velobasar' ),
+            array($this, 'settings_field_resturl'),
             'general',
             'bm-velobasar'
         );
@@ -79,6 +92,16 @@ class Admin {
         ?>
         <input type="date" id="bm_velobasar_date" name="bm_velobasar_date" value="<?php echo $bm_velobasar_date ?>" min="2018-01-01" required />
         <p class="description"><?php _e('An diesem Datum soll der Basar stattfinden', 'bm-velobasar') ?></p>
+        <?php
+    }
+
+    /**
+     * Readonly textline for REST API URL
+     */
+    function settings_field_resturl() {
+        ?>
+        <input type="text" id="bm_velobasar_resturl" name="bm_velobasar_resturl" size="40" value="<?php echo $this->get_rest_url() ?>" readonly />
+        <p class="description"><?php _e('Die zu verwendende URL für den REST API Endpunkt', 'bm-velobasar') ?></p>
         <?php
     }
 
@@ -130,5 +153,14 @@ class Admin {
         wp_enqueue_style( 'bm-velobasar-style-admin' );
         wp_register_script( 'bm-velobasar-script-admin', BM_VELOBASAR_PLUGIN_URL . 'js/admin.js' );
         wp_enqueue_script( 'bm-velobasar-script-admin' );
+    }
+
+    function get_rest_url() {
+        global $wp;
+        if( empty( $this->pretty_permalinks ) ) {
+            return home_url( $wp->request ) . '/?rest_route=' . API::get_endpoint_url();
+        } else {
+            return home_url( $wp->request ) . '/wp-json' . API::get_endpoint_url();
+        }
     }
 }
