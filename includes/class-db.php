@@ -56,7 +56,7 @@ class DB {
 
     function reset() {
         global $wpdb;
-        $wpdb->query('TRUNCATE TABLE $this->table');
+        $wpdb->query("TRUNCATE TABLE $this->table");
         $this->create_test_data();
     }
 
