@@ -50,16 +50,20 @@ class Shortcode {
 
         <?php
         // TODO: add captcha
-        $accessid = sanitize_text_field( $_POST['accessid'] );
+        $accessid = false;
+        if( isset($_POST['accessid']) ) {
+            $accessid = sanitize_text_field( $_POST['accessid'] );
+        }
         if( $accessid ) {
             $saletext = $this->db->get_saletext( $accessid );
             if( ! $saletext or sizeof( $saletext ) < 1 ) {
                 echo $nosale_message;
+            } else {
+                echo '<div class="bm-velobasar-saletext">';
+                // echo esc_html( $saletext[0] );
+                echo $saletext[0]; // allow HTML tags
+                echo '</div>';
             }
-            echo '<div class="bm-velobasar-saletext">';
-            // echo esc_html( $saletext[0] );
-            echo $saletext[0]; // allow HTML tags
-            echo '</div>';
         }
         return ob_get_clean();
     }
