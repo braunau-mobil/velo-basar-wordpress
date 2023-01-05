@@ -53,6 +53,10 @@ class Shortcode {
         $accessid = false;
         if( isset($_POST['accessid']) ) {
             $accessid = sanitize_text_field( $_POST['accessid'] );
+        } else {
+            if( get_query_var(BM_VELOBASAR_GET_ID_PARAM) ) {
+                $accessid = sanitize_text_field( get_query_var(BM_VELOBASAR_GET_ID_PARAM) );
+            }
         }
         if( $accessid ) {
             $saletext = $this->db->get_saletext( $accessid );
