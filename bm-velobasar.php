@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Braunaumobil Velobasar Verkaufsstatus
  * Description: Wordpress Plugin mit Shortcode, DB Tabelle und REST API fuer die Verkaufsabfrage vom Braunaumobil.at Velobasar
- * Version:     0.2
+ * Version:     0.3
  * Author:      Phil Mühlberger
  * Author URI:  https://braunaumobil.at
  * Text Domain: bm-velobasar
@@ -19,13 +19,14 @@ use BM_Velobasar\API;
 use BM_Velobasar\Shortcode;
 use BM_Velobasar\Admin;
 
-define( 'BM_VELOBASAR_VERSION', '0.2' );
+define( 'BM_VELOBASAR_VERSION', '0.3' );
 define( 'BM_VELOBASAR_PLUGIN_DIR', __DIR__ );
 define( 'BM_VELOBASAR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BM_TABLENAME', 'bm_velobasar_salestatus' );
 define( 'BM_VELOBASAR_API_TOKEN_OPTION', 'bm_velobasar_api_token' );
 define( 'BM_VELOBASAR_API_TOKEN_MINLEN', 20 );
 define( 'BM_VELOBASAR_API_TOKEN_MAXLEN', 60 );
+define( 'BM_VELOBASAR_GET_ID_PARAM', 'bmvelobasarid' );
 
 class BM_Velobasar {
 
@@ -39,6 +40,8 @@ class BM_Velobasar {
         if( is_admin() ) {
             require_once __DIR__ . '/admin/class-admin.php';
         }
+
+        add_action('init','add_get_queryparam');
 
         // if ( defined('WP_CLI') && WP_CLI ) {
         //    require_once __DIR__ . '/cli/class-cli.php';
@@ -65,6 +68,11 @@ class BM_Velobasar {
 
     function deactivate() {
     }
+}
+
+function add_get_queryparam() {
+    global $wp;
+    $wp->add_query_var(BM_VELOBASAR_GET_ID_PARAM);
 }
 
 function uninstall() {
