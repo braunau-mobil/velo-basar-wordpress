@@ -117,7 +117,7 @@ class Admin {
             minlength="0"
             maxlength="80"
             value="<?php echo $bm_velobasar_formurl ?>" required />
-                 <p class="description"><?php echo sprintf( __('Fixe URL f&uuml;r Form Submit (0-80 Zeichen) [optional]. Default: Aktuelle Permalink-URL. Auf der Zielseite mu&szlig; der Shortcode installiert sein.', 'bm-velobasar')) ?></p>
+                 <p class="description"><?php echo sprintf( __('Fixe URL f&uuml;r Form Submit (0-80 Zeichen) [optional]. Default: Aktuell angezeigte Url. Auf der Zielseite mu&szlig; der Shortcode installiert sein.', 'bm-velobasar')) ?></p>
         <?php
     }
 

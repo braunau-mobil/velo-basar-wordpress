@@ -38,7 +38,8 @@ class Shortcode {
         }
         $bm_velobasar_formurl = get_option('bm_velobasar_formurl');
         if( ! $bm_velobasar_formurl ) {
-            $bm_velobasar_formurl = get_permalink();
+            global $wp;
+            $bm_velobasar_formurl = add_query_arg( $wp->query_vars, home_url( $wp->request ) );
         }
 
         ob_start();
