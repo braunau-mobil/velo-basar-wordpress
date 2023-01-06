@@ -26,6 +26,13 @@ class Admin {
             )
         );
         register_setting( 'general', 'bm_velobasar_date' );
+        register_setting( 'general',
+                          'bm_velobasar_formurl',
+                          array(
+                              'type'              => 'string',
+                              'sanitize_callback' => array( $this, 'sanitize_formurl' ),
+                          )
+        );
         register_setting( 'general', 'bm_velobasar_resturl' );
         register_setting( 'general', 'bm_velobasar_reset' );
 
@@ -53,6 +60,14 @@ class Admin {
         );
 
         add_settings_field(
+            'bm_velobasar_formurl',
+            __( 'Ziel-URL des Abfrageformulars (optional)', 'bm-velobasar' ),
+            array($this, 'settings_field_formurl'),
+            'general',
+            'bm-velobasar'
+        );
+
+        add_settings_field(
             'bm_velobasar_resturl',
             __( 'URL des REST API Endpunkt', 'bm-velobasar' ),
             array($this, 'settings_field_resturl'),
@@ -67,7 +82,7 @@ class Admin {
             'general',
             'bm-velobasar'
         );
-}
+    }
 
     function settings_section() {
     }
@@ -95,6 +110,17 @@ class Admin {
         <?php
     }
 
+    function settings_field_formurl() {
+        $bm_velobasar_formurl = get_option( 'bm_velobasar_formurl' );
+        ?>
+        <input type="text" id="bm_velobasar_formurl" name="bm_velobasar_formurl" size="80"
+            minlength="0"
+            maxlength="80"
+            value="<?php echo $bm_velobasar_formurl ?>" required />
+                 <p class="description"><?php echo sprintf( __('Fixe URL f&uuml;r Form Submit (0-80 Zeichen) [optional]. Default: Aktuelle Permalink-URL. Auf der Zielseite mu&szlig; der Shortcode installiert sein.', 'bm-velobasar')) ?></p>
+        <?php
+    }
+
     /**
      * Readonly textline for REST API URL
      */
@@ -112,7 +138,7 @@ class Admin {
         <?php
     }
 
-    function sanitize_token($token) {
+    function sanitize_token( $token ) {
         $token = sanitize_text_field( $token );
         if( strlen( $token ) < BM_VELOBASAR_API_TOKEN_MINLEN ) {
             add_settings_error(
@@ -135,6 +161,33 @@ class Admin {
             return;
         }
         return $token;
+    }
+
+    function sanitize_formurl( $formurl ) {
+        # First case: clear form url parameter when left empty
+        if( strlen( $formurl ) == 0 ) {
+            return '';
+        }
+        $formurl = sanitize_url( $formurl, array('https', 'http') );
+        if( ! $formurl ) {
+            add_settings_error(
+                'bm_velobasar_formurl',
+                'bm-velobasar-formurl-format-error',
+                sprintf( __('Fehler: Das Format der Form Url ist falsch. Erlaubt ist nur http oder https.') ),
+                'error'
+            );
+            return;
+        }
+        if( strlen( $formurl ) > 80 ) {
+            add_settings_error(
+                'bm_velobasar_formurl',
+                'bm-velobasar-long-formurl',
+                sprintf( __('Fehler: Die Submit URL des Abfrageformulars ist zu lang. Maximum 80 Zeichen!') ),
+                'error'
+            );
+            return;
+        }
+        return $formurl;
     }
 
     function bm_velobasar_reset( $old_value, $new_value ) {

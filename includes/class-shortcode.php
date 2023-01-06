@@ -36,6 +36,10 @@ class Shortcode {
         if( $bm_velobasar_date != date('Y-m-d')) {
             return;
         }
+        $bm_velobasar_formurl = get_option('bm_velobasar_formurl');
+        if( ! $bm_velobasar_formurl ) {
+            $bm_velobasar_formurl = get_permalink();
+        }
 
         ob_start();
 
@@ -43,7 +47,7 @@ class Shortcode {
             echo '<' . $atts['titletag'] . '>' . $atts['title'] . '</' . $atts['titletag'] . '>'; 
         }
         ?>
-        <form id="bm-velobasar-search" method="post" name="bm-velobasar-salestatus" action="<?php echo get_permalink(); ?>" >
+        <form id="bm-velobasar-search" method="post" name="bm-velobasar-salestatus" action="<?php echo $bm_velobasar_formurl; ?>" >
             <input id="accessid" name="accessid" type="text" value="" placeholder="<?php _e( 'Ihre Abfrage-ID', 'bm-velobasar' ) ?>" />
         <button type="submit" class="button"><span class="icon-search"></span><?php _e( 'Status abrufen', 'bm-velobasar' ) ?></button>
         </form>

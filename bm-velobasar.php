@@ -19,7 +19,7 @@ use BM_Velobasar\API;
 use BM_Velobasar\Shortcode;
 use BM_Velobasar\Admin;
 
-define( 'BM_VELOBASAR_VERSION', '0.2' );
+define( 'BM_VELOBASAR_VERSION', '0.3' );
 define( 'BM_VELOBASAR_PLUGIN_DIR', __DIR__ );
 define( 'BM_VELOBASAR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BM_TABLENAME', 'bm_velobasar_salestatus' );
