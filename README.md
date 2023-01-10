@@ -15,7 +15,7 @@ Bietet entsprechende Einstellungsmöglichkeiten im WordPress Admin
 `curl -i -X GET -H "bm-velobasar-api-token: geheimestoken" "http://127.0.0.1:8080/wp-json/bm/v1/velobasar/test1"`
 
 `curl -i -X POST \
-   -H "bm-velobasar-api-token:geheimestoken" \
+   -H "bm-velobasar-api-token: geheimestoken" \
    -H "Content-Type:application/json" \
    -d \
 '{"accessid": "TK12345", "saletext": "Artikel Mountainbike grau wurde verkauft"}' \
@@ -24,3 +24,9 @@ Bietet entsprechende Einstellungsmöglichkeiten im WordPress Admin
 ### Example Shortcode
 
 `[bmvelobasar title="Fahrradbasar Verkaufsabfrage" titletag="h4"]`
+
+### Example Landing Page (barcode)
+
+`https://braunaumobil.at?bmvelobasarid=abc123xyz`
+
+For this to work we need the bmvelobasar shortcode installed and activated on the landing page, in this case https://braunaumobil.at. It would then pick up the query parameter bmvelobasarid and show the related sales.
