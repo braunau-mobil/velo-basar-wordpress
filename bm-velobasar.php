@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Braunaumobil Velobasar Verkaufsstatus
  * Description: Wordpress Plugin mit Shortcode, DB Tabelle und REST API fuer die Verkaufsabfrage vom Braunaumobil.at Velobasar
- * Version:     0.3
+ * Version:     0.4
  * Author:      Phil Mühlberger
  * Author URI:  https://braunaumobil.at
  * Text Domain: bm-velobasar
@@ -19,7 +19,7 @@ use BM_Velobasar\API;
 use BM_Velobasar\Shortcode;
 use BM_Velobasar\Admin;
 
-define( 'BM_VELOBASAR_VERSION', '0.3' );
+define( 'BM_VELOBASAR_VERSION', '0.4' );
 define( 'BM_VELOBASAR_PLUGIN_DIR', __DIR__ );
 define( 'BM_VELOBASAR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BM_TABLENAME', 'bm_velobasar_salestatus' );
