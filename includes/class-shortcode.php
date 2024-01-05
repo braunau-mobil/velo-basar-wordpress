@@ -49,7 +49,7 @@ class Shortcode {
         }
         ?>
         <form id="bm-velobasar-search" method="post" name="bm-velobasar-salestatus" action="<?php echo $bm_velobasar_formurl; ?>" >
-            <input id="accessid" name="accessid" type="text" value="" placeholder="<?php _e( 'Ihre Abfrage-ID', 'bm-velobasar' ) ?>" />
+            <input id="accessid" name="accessid" type="text" value="" placeholder="<?php _e( 'Ihr Online-Abfrage-Code', 'bm-velobasar' ) ?>" />
         <button type="submit" class="button"><span class="icon-search"></span><?php _e( 'Status abrufen', 'bm-velobasar' ) ?></button>
         </form>
 
